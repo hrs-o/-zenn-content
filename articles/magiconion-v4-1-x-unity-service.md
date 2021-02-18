@@ -13,6 +13,7 @@ published: false
 - サンプルで利用しているコードはMagicOnionのREADMEをほぼ利用しています
 - この記事ではServiceのみ取り扱い、StreamingHubに関しては取り扱わない
 - ディレクトリやプロジェクト名は適宜読み替えてください
+- 続編の[StreamingHubでのリアルタイム通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-service)を書きました
 
 ## 環境
 
