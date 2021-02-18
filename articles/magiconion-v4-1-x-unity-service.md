@@ -3,7 +3,7 @@ title: "Unity+MagicOnion4.1.xを試す 環境構築&サービスでの通信編"
 emoji: "🔖"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["magiconion","grpc","unity","aspnetcore"]
-published: false
+published: true
 ---
 
 
@@ -13,7 +13,7 @@ published: false
 - サンプルで利用しているコードはMagicOnionのREADMEをほぼ利用しています
 - この記事ではServiceのみ取り扱い、StreamingHubに関しては取り扱わない
 - ディレクトリやプロジェクト名は適宜読み替えてください
-- 続編の[StreamingHubでのリアルタイム通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-service)を書きました
+- 続編の[StreamingHubでのリアルタイム通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-streaming-hub)を書きました
 
 ## 環境
 
