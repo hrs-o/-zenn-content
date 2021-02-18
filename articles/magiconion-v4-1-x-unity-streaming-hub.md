@@ -3,7 +3,7 @@ title: "Unity+MagicOnion4.1.xを試す StreamingHubでのリアルタイム通�
 emoji: "🔖"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["magiconion","grpc","unity","aspnetcore"]
-published: false
+published: true
 ---
 
 
