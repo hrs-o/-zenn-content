@@ -6,10 +6,16 @@ topics: ["magiconion","grpc","unity","aspnetcore"]
 published: true
 ---
 
+## チャプター
+
+- [環境構築&サービスでの通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-service)
+- [StreamingHubでのリアルタイム通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-streaming-hub)
+- [サーバーをEC2環境で動かす編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-aws-ec2-nginx)
+
 
 ## まえがき
 
-- [Unity+MagicOnion4.1.xを試す 環境構築&サービスでの通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-service)の続きになります
+- [環境構築&サービスでの通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-service)の続きになります
 - 環境構築、前提等は上記の記事を参照してください
 - サンプルで利用しているコードはMagicOnionのREADMEをほぼ利用しています
 
