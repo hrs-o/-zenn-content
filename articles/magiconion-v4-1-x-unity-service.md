@@ -11,7 +11,7 @@ published: true
 - [環境構築&サービスでの通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-service)
 - [StreamingHubでのリアルタイム通信編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-streaming-hub)
 - [サーバーをEC2環境で動かす編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-aws-ec2-nginx)
-
+- [IL2CPPでスマホ実機ビルド編](https://zenn.dev/hrs/articles/magiconion-v4-1-x-unity-il2cpp)
 
 ## まえがき
 
