@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  zenn-cli:
+    build: docker/zenn-cli
+    container_name: "zenn-cli"
+    working_dir: "/zenn"
+    volumes:
+      - ./articles:/zenn/articles
+      - ./books:/zenn/books
+    ports:
+      - 8000:8000
