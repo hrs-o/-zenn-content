@@ -78,6 +78,14 @@ MyApp
 
 ![](https://storage.googleapis.com/zenn-user-upload/a9tk6zf23s7f12lrjf485f0qv644)
 
+#### GitHubなどで管理する場合
+
+- 赤で囲っているが、Google.Protobufは不要だと思われるので入れなくて良さそう
+- iOS向けのlibgrpc.aのファイルサイズが100MBを余裕で越えているのでREADMEの[Stripping debug symbols from ios/libgrpc.a](https://github.com/Cysharp/MagicOnion#stripping-debug-symbols-from-ioslibgrpca)を参考に`strip`してあげると良い
+  - ここでいう`strip`コマンドはXCodeのstripなのでMac環境じゃないと動かないと思われる
+- `Grcp.Core/runtimes`配下で不要なOSのディレクトリは削除して問題ないと思われるので利用しないOSがあれば削除推奨
+
+
 ### 必要なディレクトリを作成
 
 - Assets > Scripts > MyApp > Shared > Service
