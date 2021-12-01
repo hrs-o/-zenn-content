@@ -1,0 +1,129 @@
+---
+title: "CircleCIでまだリリースされていないPHP8.1のコンビニエンスイメージを使う"
+emoji: "✈️"
+type: "tech" # tech: 技術記事 / idea: アイデア
+topics: ["php","php8","circleci"]
+published: true
+---
+
+## まえがき
+
+- めでたく[PHP 8.1がリリース](https://www.php.net/releases/8.1/en.php)されましたがCircleCIの[コンビニエンスイメージ](https://circleci.com/developer/ja/images/image/cimg/php)がまだ更新されていなくてCIが通らないよ！！
+- ということで脳筋的な感じで解決してみる。
+- 公式で対応されたら解決するけど横着しながら最速でバージョン対応出来るので覚書
+
+## Dockerfileを書き換える
+
+- この作業だけで基本的に終わり、かんたん。
+- コンビニエンスイメージ使ってるときはこんな感じで自前の部分を書いてると思うので
+
+```docker
+FROM cimg/php:8.0
+
+～自前部分～
+
+```
+
+- 下記の様に変更する
+  - この定義自体は[CircleCI-Public/cimg-php](https://github.com/CircleCI-Public/cimg-php)のリポジトリの[Dockerfile.template](https://github.com/CircleCI-Public/cimg-php/blob/master/Dockerfile.template)からほぼまんまコピペしている
+  - [LICENSE](https://github.com/CircleCI-Public/cimg-php/blob/master/LICENSE)
+  
+```docker
+# vim:set ft=dockerfile:
+
+FROM cimg/base:2021.11
+
+LABEL maintainer="Community & Partner Engineering Team <community-partner@circleci.com>"
+
+ENV PHP_VERSION 8.1.0
+ENV PHP_MINOR 8.1
+
+# Install dependencies
+RUN sudo apt-get update && sudo apt-get install -y \
+		autoconf \
+		bison \
+		build-essential \
+		libcurl4-openssl-dev \
+		libfreetype6-dev \
+		libjpeg-dev \
+		libonig-dev \
+		libpng-dev \
+		libreadline-dev \
+		libsodium-dev \
+		libsqlite3-dev \
+		libssl-dev \
+		libtool \
+		libwebp-dev \
+		libxml2-dev \
+		libxpm-dev \
+		libzip-dev \
+		re2c \
+		zlib1g-dev \
+	&& \
+	sudo rm -rf /var/lib/apt/lists/* && \
+
+	curl -sSL "https://www.php.net/distributions/php-${PHP_VERSION}.tar.gz" | tar -xz && \
+	cd "php-${PHP_VERSION}" && \
+	./buildconf && \
+	./configure \
+		--enable-bcmath \
+		--enable-fpm \
+		--enable-gd \
+		--enable-intl \
+		--enable-mbstring \
+		--enable-pcntl \
+		--enable-phpdbg \
+		--enable-sockets \
+		--enable-exif \
+		--enable-zip \
+		--enable-soap \
+		--with-config-file-scan-dir=/etc/php.d \
+		--with-curl \
+		--with-freetype \
+		--with-jpeg \
+		--with-mysqli=mysqlnd \
+		--with-pear \
+		--with-pdo-mysql=mysqlnd \
+		--with-pdo-pgsql \
+		--with-pdo-sqlite \
+		--with-pgsql \
+		--with-openssl \
+		--with-readline \
+		--with-sodium \
+		--with-webp \
+		--with-xpm \
+		--with-zip \
+		--with-zlib \
+	&& \
+	make -j $(nproc) && \
+	sudo make install && \
+	cd .. && \
+	rm -r php-${PHP_VERSION} && \
+	sudo mkdir -p /etc/php.d && \
+	echo 'memory_limit = -1' | sudo tee -a /etc/php.d/circleci.ini && \
+	sudo pear config-set php_ini /etc/php.d/circleci.ini && \
+	sudo pecl update-channels && \
+
+	# Check things are as they should be
+	# We likely don't need to test EVERYTHING here. What is important is to
+	# test for extensions where the installation method has changed between
+	# releases. For example, if we decide to use this template back for older
+	# PHP releases, the way `gd` is enabled at compile time changed.
+	php --version | grep "${PHP_VERSION}" || ( echo "Error: PHP version installed is not correct." && exit 1 ) && \
+	php -m | grep "gd" && \
+	php -m | grep "sockets"
+
+# Install the PHP package manager Composer
+ENV COMPOSER_VERSION 2.1.12
+RUN sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+	sudo php composer-setup.php --version=$COMPOSER_VERSION --install-dir=/usr/local/bin --filename=composer && \
+	sudo php -r "unlink('composer-setup.php');" && \
+	composer --version
+ENV PATH /home/circleci/.config/composer/vendor/bin:/home/circleci/.composer/vendor/bin:$PATH
+
+～自前部分～
+```
+
+## あとがき
+
+- 普段楽している分、こういうときに若干引っかかったりはしますが中身を雰囲気しっていれば対処もできますね
