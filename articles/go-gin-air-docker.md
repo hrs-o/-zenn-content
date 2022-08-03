@@ -118,7 +118,7 @@ services:
 ### ビルド
 
 ```bash
-$ docker-compose buid
+$ docker-compose build
 ```
 
 ## .air.tomlの生成
